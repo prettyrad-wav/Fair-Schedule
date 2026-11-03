@@ -6,8 +6,8 @@ the app all load shifts and employees their own way and pass them in.
 
     solve_week(shifts, employees, ledger, week_start) -> Schedule
 
-Hard rules always hold (coverage, roles, Can't, max shifts, no doubles, no
-clopens). Among the schedules that follow them, the solver picks the one with
+Hard rules always hold (coverage, roles, Can't, min and max shifts, no doubles,
+no clopens). Among the schedules that follow them, the solver picks the one with
 the lowest fairness-weighted cost (Notes/Fairness-Score.md).
 """
 
@@ -28,6 +28,7 @@ DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 # Fewer hours than this between a closing shift and the next morning's shift
 # counts as a clopen. Bar close (11:30pm) to brunch (9:30am) is 10 hours.
+# This is the default; the manager can pass their own to solve_week.
 MIN_REST_HOURS = 11
 
 # CP-SAT only works with whole numbers, but cost x (1 + ledger) has decimals.
@@ -45,7 +46,7 @@ def _minutes(t: time) -> int:
     return t.hour * 60 + t.minute
 
 
-def _is_clopen(first: Shift, second: Shift) -> bool:
+def _is_clopen(first: Shift, second: Shift, min_rest_hours: float) -> bool:
     """True if working `first` and then `second` the next day is too little rest.
 
     Only looks within one week (Sun -> Mon of the next week isn't checked yet),
@@ -54,7 +55,7 @@ def _is_clopen(first: Shift, second: Shift) -> bool:
     if DAYS.index(second.day) != DAYS.index(first.day) + 1:
         return False
     rest = (24 * 60 - _minutes(first.end)) + _minutes(second.start)
-    return rest < MIN_REST_HOURS * 60
+    return rest < min_rest_hours * 60
 
 
 def solve_week(
@@ -62,11 +63,16 @@ def solve_week(
     employees: list[Employee],
     ledger: dict[str, float],
     week_start: date,
+    min_rest_hours: float = MIN_REST_HOURS,
+    max_cost_weight: float = MAX_COST_WEIGHT,
 ) -> Schedule:
     """Build the schedule for one week.
 
     `ledger` maps employee id -> their current ledger score. Pass 0 for
     everyone to solve without fairness (the "ledger off" run).
+
+    `min_rest_hours` is the manager's clopen setting. `max_cost_weight` is how
+    much the worst week counts; pass 0 to turn that term off.
 
     Raises ValueError if no schedule can follow every hard rule.
     """
@@ -94,12 +100,11 @@ def solve_week(
             if shift.role not in employee.roles or employee.ratings[shift.id] == Rating.CANT:
                 model.add(works[employee.id, shift.id] == 0)
 
-    # Max shifts: nobody works more than their weekly max.
+    # Min and max shifts: everyone works between their weekly min and max.
     for employee in employees:
-        model.add(
-            sum(works[employee.id, shift.id] for shift in shifts)
-            <= employee.max_shifts_per_week
-        )
+        total = sum(works[employee.id, shift.id] for shift in shifts)
+        model.add(total >= employee.min_shifts_per_week)
+        model.add(total <= employee.max_shifts_per_week)
 
     # No doubles: nobody works more than one shift on the same day.
     for employee in employees:
@@ -109,7 +114,7 @@ def solve_week(
     # No clopens: nobody works both shifts in a closing -> opening pair.
     for first in shifts:
         for second in shifts:
-            if _is_clopen(first, second):
+            if _is_clopen(first, second, min_rest_hours):
                 for employee in employees:
                     model.add(works[employee.id, first.id] + works[employee.id, second.id] <= 1)
 
@@ -139,7 +144,7 @@ def solve_week(
             if employee.ratings[shift.id] != Rating.CANT
         )
         model.add(max_cost >= week_cost)
-    terms.append(round(MAX_COST_WEIGHT * COST_SCALE) * max_cost)
+    terms.append(round(max_cost_weight * COST_SCALE) * max_cost)
 
     model.minimize(sum(terms))
 
