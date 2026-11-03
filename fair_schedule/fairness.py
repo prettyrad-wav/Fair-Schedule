@@ -15,7 +15,7 @@ solve_week reads.
 from fair_schedule.models import SHIFT_COST, Employee, LedgerEntry, Schedule
 
 # How much of last week's ledger carries over. 0.5 = old luck halves each week.
-DECAY = 0.5
+DECAY = 0.75
 
 
 def update_ledger(

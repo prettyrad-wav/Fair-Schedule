@@ -28,7 +28,7 @@ import statistics
 from datetime import date, timedelta
 from pathlib import Path
 
-from fair_schedule import fairness
+from fair_schedule import fairness, solver
 from fair_schedule.fairness import to_scores, update_ledger
 from fair_schedule.models import Employee, LedgerEntry, Shift
 from fair_schedule.sample_data import sample_employees, sample_shifts
@@ -39,7 +39,7 @@ FIRST_WEEK = date(2026, 11, 2)
 
 # Name of this experiment. The results file is named after it, and an existing
 # file is never overwritten, so the baseline can't be lost by accident.
-RUN_NAME = "baseline"
+RUN_NAME = "decay0.75_weight3"
 RESULTS_DIR = Path(__file__).parent / "results"
 
 
@@ -124,7 +124,11 @@ def save_results(runs: dict[str, list[list[LedgerEntry]]]) -> Path:
 
     data = {
         "run_name": RUN_NAME,
-        "settings": {"weeks": WEEKS, "decay": fairness.DECAY},
+        "settings": {
+            "weeks": WEEKS,
+            "decay": fairness.DECAY,
+            "max_cost_weight": solver.MAX_COST_WEIGHT,
+        },
         "runs": {
             label: {
                 "summary": summarize(history),
@@ -152,11 +156,11 @@ shifts = sample_shifts()
 employees = sample_employees()
 
 runs = {
-    "ledger_off": simulate(shifts, employees, ledger_on=False),
+    # "ledger_off": simulate(shifts, employees, ledger_on=False),
     "ledger_on": simulate(shifts, employees, ledger_on=True),
 }
 
-print_run("Ledger off", runs["ledger_off"], employees)
-print_run("Ledger on", runs["ledger_on"], employees)
+for label, history in runs.items():
+    print_run(label, history, employees)
 
 print(f"\nSaved to {save_results(runs)}")

@@ -34,6 +34,11 @@ MIN_REST_HOURS = 11
 # Multiplying by 100 and rounding keeps two decimal places of precision.
 COST_SCALE = 100
 
+# How much the solver cares about the worst week anyone gets, on top of the
+# total cost. 0 = off (the original objective). Without it, tied bad shifts all
+# go to whoever has the lowest ledger, so people alternate bad week / good week.
+MAX_COST_WEIGHT = 3
+
 
 def _minutes(t: time) -> int:
     """Minutes since midnight, so times can be subtracted."""
@@ -122,6 +127,20 @@ def solve_week(
                 continue
             cost = round(SHIFT_COST[rating] * (1 + ledger[employee.id]) * COST_SCALE)
             terms.append(cost * works[employee.id, shift.id])
+
+    # Worst week: max_cost is the highest raw cost (no ledger) anyone gets this
+    # week. Adding it to the objective pushes the solver to split bad shifts
+    # instead of giving them all to one person.
+    max_cost = model.new_int_var(0, sum(SHIFT_COST.values()) * len(shifts), "max_cost")
+    for employee in employees:
+        week_cost = sum(
+            SHIFT_COST[employee.ratings[shift.id]] * works[employee.id, shift.id]
+            for shift in shifts
+            if employee.ratings[shift.id] != Rating.CANT
+        )
+        model.add(max_cost >= week_cost)
+    terms.append(round(MAX_COST_WEIGHT * COST_SCALE) * max_cost)
+
     model.minimize(sum(terms))
 
     # --- 4. Solve -----------------------------------------------------------------
