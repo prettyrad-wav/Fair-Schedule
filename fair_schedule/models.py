@@ -59,6 +59,8 @@ class Employee:
     max_shifts_per_week: int
     # Shift id -> rating. The form rates every shift, so every shift has one.
     ratings: dict[str, Rating] = field(default_factory=dict)
+    # Full-time staff get a minimum; part-time staff can leave it at 0.
+    min_shifts_per_week: int = 0
 
 
 # --- 3. Results: what the app produces each week ------------------------------
@@ -91,4 +93,4 @@ class LedgerEntry:
     employee_id: str
     week_start: date
     week_score: float  # average cost of the shifts they got that week
-    ledger: float  # 0.5 * previous ledger + week_score
+    ledger: float  # DECAY * previous ledger + week_score

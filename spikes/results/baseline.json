@@ -1,0 +1,935 @@
+{
+  "run_name": "baseline",
+  "settings": {
+    "weeks": 8,
+    "decay": 0.5
+  },
+  "runs": {
+    "ledger_off": {
+      "summary": {
+        "totals": {
+          "alex": 12.0,
+          "bea": 6.0,
+          "casey": 2.6666666666666665,
+          "dana": 10.0,
+          "eli": 10.666666666666666,
+          "taylor": 10.0,
+          "jordan": 10.666666666666666,
+          "riley": 16.0,
+          "sam": 4.0
+        },
+        "swings": {
+          "alex": 0.0,
+          "bea": 0.0,
+          "casey": 0.0,
+          "dana": 0.0,
+          "eli": 0.0,
+          "taylor": 0.0,
+          "jordan": 0.0,
+          "riley": 0.0,
+          "sam": 0.0
+        },
+        "spread": 13.333333333333334,
+        "std_dev": 3.937787810370967,
+        "avg_swing": 0.0
+      },
+      "entries": [
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 1.5
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 0.75
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 1.25
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 1.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 1.25
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 1.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 2.0
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.5
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.25
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.125
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.5
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 1.875
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.0
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 1.875
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.0
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.0
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.75
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.625
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.3125
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.5833333333333333
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.1875
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.333333333333333
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.1875
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.333333333333333
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.5
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.875
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.8125
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.40625
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.625
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.34375
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.5
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.34375
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.5
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.75
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.9375
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.90625
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.453125
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.6458333333333333
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.421875
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.583333333333333
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.421875
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.583333333333333
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.875
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.96875
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.953125
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.4765625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.65625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.4609375
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.4609375
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.9375
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.984375
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.9765625
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.48828125
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.6614583333333333
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.48046875
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.645833333333333
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.48046875
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.645833333333333
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.96875
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.9921875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 2.98828125
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.494140625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.6640625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 2.490234375
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.65625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 2.490234375
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 2.65625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 3.984375
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.99609375
+        }
+      ]
+    },
+    "ledger_on": {
+      "summary": {
+        "totals": {
+          "alex": 7.5,
+          "bea": 6.0,
+          "casey": 9.0,
+          "dana": 8.5,
+          "eli": 6.666666666666666,
+          "taylor": 8.5,
+          "jordan": 7.25,
+          "riley": 9.5,
+          "sam": 8.833333333333334
+        },
+        "swings": {
+          "alex": 1.9285714285714286,
+          "bea": 0.0,
+          "casey": 2.0952380952380953,
+          "dana": 0.03571428571428571,
+          "eli": 0.4761904761904762,
+          "taylor": 0.03571428571428571,
+          "jordan": 1.1785714285714286,
+          "riley": 2.4285714285714284,
+          "sam": 1.8333333333333333
+        },
+        "spread": 3.5,
+        "std_dev": 1.1069366025095153,
+        "avg_swing": 1.1124338624338623
+      },
+      "entries": [
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "alex",
+          "week_score": 1.5,
+          "ledger": 1.5
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 0.75
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "casey",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 1.25
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "eli",
+          "week_score": 1.3333333333333333,
+          "ledger": 1.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 1.25
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "jordan",
+          "week_score": 1.3333333333333333,
+          "ledger": 1.3333333333333333
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "riley",
+          "week_score": 2.0,
+          "ledger": 2.0
+        },
+        {
+          "week_start": "2026-11-02",
+          "employee_id": "sam",
+          "week_score": 0.5,
+          "ledger": 0.5
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "alex",
+          "week_score": 0.0,
+          "ledger": 0.75
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.125
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "casey",
+          "week_score": 2.3333333333333335,
+          "ledger": 2.5
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "dana",
+          "week_score": 1.25,
+          "ledger": 1.875
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "eli",
+          "week_score": 0.3333333333333333,
+          "ledger": 1.0
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "taylor",
+          "week_score": 1.25,
+          "ledger": 1.875
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "jordan",
+          "week_score": 0.5,
+          "ledger": 1.1666666666666665
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "riley",
+          "week_score": 0.0,
+          "ledger": 1.0
+        },
+        {
+          "week_start": "2026-11-09",
+          "employee_id": "sam",
+          "week_score": 2.5,
+          "ledger": 2.75
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "alex",
+          "week_score": 2.0,
+          "ledger": 2.375
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.3125
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "casey",
+          "week_score": 0.0,
+          "ledger": 1.25
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.9375
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "eli",
+          "week_score": 1.0,
+          "ledger": 1.5
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.9375
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "jordan",
+          "week_score": 0.3333333333333333,
+          "ledger": 0.9166666666666665
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "riley",
+          "week_score": 2.5,
+          "ledger": 3.0
+        },
+        {
+          "week_start": "2026-11-16",
+          "employee_id": "sam",
+          "week_score": 0.0,
+          "ledger": 1.375
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "alex",
+          "week_score": 0.0,
+          "ledger": 1.1875
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.40625
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "casey",
+          "week_score": 2.3333333333333335,
+          "ledger": 2.9583333333333335
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.96875
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "eli",
+          "week_score": 0.6666666666666666,
+          "ledger": 1.4166666666666665
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.96875
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "jordan",
+          "week_score": 1.75,
+          "ledger": 2.208333333333333
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "riley",
+          "week_score": 0.0,
+          "ledger": 1.5
+        },
+        {
+          "week_start": "2026-11-23",
+          "employee_id": "sam",
+          "week_score": 1.5,
+          "ledger": 2.1875
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "alex",
+          "week_score": 2.0,
+          "ledger": 2.59375
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.453125
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "casey",
+          "week_score": 0.0,
+          "ledger": 1.4791666666666667
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.984375
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "eli",
+          "week_score": 1.0,
+          "ledger": 1.7083333333333333
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.984375
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "jordan",
+          "week_score": 0.0,
+          "ledger": 1.1041666666666665
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "riley",
+          "week_score": 2.5,
+          "ledger": 3.25
+        },
+        {
+          "week_start": "2026-11-30",
+          "employee_id": "sam",
+          "week_score": 0.3333333333333333,
+          "ledger": 1.4270833333333333
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "alex",
+          "week_score": 0.0,
+          "ledger": 1.296875
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.4765625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "casey",
+          "week_score": 1.6666666666666667,
+          "ledger": 2.40625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.9921875
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "eli",
+          "week_score": 0.6666666666666666,
+          "ledger": 1.5208333333333333
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.9921875
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "jordan",
+          "week_score": 1.75,
+          "ledger": 2.302083333333333
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "riley",
+          "week_score": 0.0,
+          "ledger": 1.625
+        },
+        {
+          "week_start": "2026-12-07",
+          "employee_id": "sam",
+          "week_score": 2.0,
+          "ledger": 2.7135416666666665
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "alex",
+          "week_score": 2.0,
+          "ledger": 2.6484375
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.48828125
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "casey",
+          "week_score": 0.0,
+          "ledger": 1.203125
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.99609375
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "eli",
+          "week_score": 1.0,
+          "ledger": 1.7604166666666665
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.99609375
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "jordan",
+          "week_score": 0.3333333333333333,
+          "ledger": 1.4843749999999998
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "riley",
+          "week_score": 2.5,
+          "ledger": 3.3125
+        },
+        {
+          "week_start": "2026-12-14",
+          "employee_id": "sam",
+          "week_score": 0.0,
+          "ledger": 1.3567708333333333
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "alex",
+          "week_score": 0.0,
+          "ledger": 1.32421875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "bea",
+          "week_score": 0.75,
+          "ledger": 1.494140625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "casey",
+          "week_score": 2.3333333333333335,
+          "ledger": 2.9348958333333335
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "dana",
+          "week_score": 1.0,
+          "ledger": 1.998046875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "eli",
+          "week_score": 0.6666666666666666,
+          "ledger": 1.546875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "taylor",
+          "week_score": 1.0,
+          "ledger": 1.998046875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "jordan",
+          "week_score": 1.25,
+          "ledger": 1.9921875
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "riley",
+          "week_score": 0.0,
+          "ledger": 1.65625
+        },
+        {
+          "week_start": "2026-12-21",
+          "employee_id": "sam",
+          "week_score": 2.0,
+          "ledger": 2.6783854166666665
+        }
+      ]
+    }
+  }
+}
