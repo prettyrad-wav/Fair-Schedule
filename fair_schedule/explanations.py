@@ -16,6 +16,7 @@ from dataclasses import dataclass, field
 from datetime import time
 
 from fair_schedule.models import Employee, LedgerEntry, Rating, Schedule, Shift
+from fair_schedule.solver import MIN_REST_HOURS, _is_clopen
 
 # --- 1. Fact types --------------------------------------------------------------
 
@@ -38,6 +39,10 @@ class ShiftFact:
     needed: int  # how many people the shift needs
     could_work: int  # people with the right role who didn't rate it Can't
     willing: int  # of those, how many rated it Want or Fine
+    wanted: int  # of those, how many rated it Want
+    # Only set for missed Want shifts: the rule that kept them off it (see
+    # _why_missed). None for shifts they got.
+    why_missed: str | None = None
 
 
 @dataclass
@@ -76,9 +81,30 @@ def _can_work(employee: Employee, shift: Shift) -> bool:
     return shift.role in employee.roles and employee.ratings[shift.id] != Rating.CANT
 
 
+def _why_missed(
+    shift: Shift, got: list[Shift], employee: Employee, min_rest_hours: float
+) -> str:
+    """Which hard rule kept the employee off a Want shift they could work.
+
+    Checked in this order, and the first match wins:
+        already_working_that_day   no doubles
+        would_be_clopen            too little rest next to a shift they got
+        at_max_shifts              they already have their max for the week
+        given_to_others            no rule blocked it; the spots went to others
+    """
+    if any(g.day == shift.day for g in got):
+        return "already_working_that_day"
+    if any(_is_clopen(g, shift, min_rest_hours) or _is_clopen(shift, g, min_rest_hours) for g in got):
+        return "would_be_clopen"
+    if len(got) >= employee.max_shifts_per_week:
+        return "at_max_shifts"
+    return "given_to_others"
+
+
 def _shift_fact(shift: Shift, employee: Employee, employees: list[Employee]) -> ShiftFact:
     able = [e for e in employees if _can_work(e, shift)]
     willing = [e for e in able if e.ratings[shift.id] in (Rating.WANT, Rating.FINE)]
+    wanted = [e for e in able if e.ratings[shift.id] == Rating.WANT]
     return ShiftFact(
         shift_id=shift.id,
         day=shift.day,
@@ -89,6 +115,7 @@ def _shift_fact(shift: Shift, employee: Employee, employees: list[Employee]) -> 
         needed=shift.needed,
         could_work=len(able),
         willing=len(willing),
+        wanted=len(wanted),
     )
 
 
@@ -101,12 +128,14 @@ def build_explanation_facts(
     employees: list[Employee],
     ledger_before: dict[str, float],
     entries: list[LedgerEntry],
+    min_rest_hours: float = MIN_REST_HOURS,
 ) -> list[EmployeeFacts]:
     """Work out the facts behind each employee's week.
 
     `ledger_before` is the dict that was passed to solve_week, and `entries` is
-    what update_ledger returned for this schedule. Returns one EmployeeFacts
-    per employee, in the same order as `employees`.
+    what update_ledger returned for this schedule. `min_rest_hours` should
+    match what solve_week used, so clopens are judged the same way. Returns one
+    EmployeeFacts per employee, in the same order as `employees`.
     """
     entry_by_id = {entry.employee_id: entry for entry in entries}
     assigned = {(a.employee_id, a.shift_id) for a in schedule.assignments}
@@ -124,6 +153,12 @@ def build_explanation_facts(
             and _can_work(employee, s)
         ]
 
+        missed_facts = []
+        for s in missed:
+            fact = _shift_fact(s, employee, employees)
+            fact.why_missed = _why_missed(s, got, employee, min_rest_hours)
+            missed_facts.append(fact)
+
         # Rank = 1 + how many people ended the week with a higher ledger.
         higher = sum(1 for other in entries if other.ledger > entry.ledger)
 
@@ -132,7 +167,7 @@ def build_explanation_facts(
                 employee_id=employee.id,
                 name=employee.name,
                 shifts=[_shift_fact(s, employee, employees) for s in got],
-                missed_wants=[_shift_fact(s, employee, employees) for s in missed],
+                missed_wants=missed_facts,
                 min_shifts=employee.min_shifts_per_week,
                 max_shifts=employee.max_shifts_per_week,
                 week_score=entry.week_score,
