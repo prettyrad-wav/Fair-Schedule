@@ -1,2 +1,4 @@
 ortools==9.15.6755
 matplotlib==3.11.2
+anthropic==2.4.0
+python-dotenv==1.2.4
