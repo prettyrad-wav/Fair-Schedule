@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local symlink to Obsidian vault (machine-specific)
+vault
+
+# Claude Code local settings
+.claude/settings.local.json
