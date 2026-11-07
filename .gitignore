@@ -224,3 +224,6 @@ vault
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Raw screen recordings (the README uses docs/images/demo.gif)
+docs/videos/
