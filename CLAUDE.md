@@ -24,3 +24,17 @@ Current project plan:
 - The vault holds planning: open decisions, the decision log, and daily session logs. When a decision is made or the status changes, update the project note in the vault.
 - Once specs exist, they live in this repo's `docs/` folder and the repo is the source of truth. The vault project note links to them; don't keep a second copy in the vault.
 - Never write secrets or API keys to the repo or the vault. The Claude API key goes in `.env` / Streamlit secrets.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues (prettyrad-wav/Fair-Schedule) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one root `GLOSSARY.md` plus `docs/adr/`, both created lazily. See `docs/agents/domain.md`.
