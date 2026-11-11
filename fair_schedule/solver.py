@@ -65,6 +65,7 @@ def solve_week(
     week_start: date,
     min_rest_hours: float = MIN_REST_HOURS,
     max_cost_weight: float = MAX_COST_WEIGHT,
+    required: set[tuple[str, str]] = frozenset(),
 ) -> Schedule:
     """Build the schedule for one week.
 
@@ -73,6 +74,9 @@ def solve_week(
 
     `min_rest_hours` is the manager's clopen setting. `max_cost_weight` is how
     much the worst week counts; pass 0 to turn that term off.
+
+    `required` is (employee id, shift id) pairs that must be in the schedule,
+    from the manager's AssignShift changes (fair_schedule/changes.py).
 
     Raises ValueError if no schedule can follow every hard rule.
     """
@@ -117,6 +121,10 @@ def solve_week(
             if _is_clopen(first, second, min_rest_hours):
                 for employee in employees:
                     model.add(works[employee.id, first.id] + works[employee.id, second.id] <= 1)
+
+    # Required: the manager put this employee on this shift for the week.
+    for employee_id, shift_id in required:
+        model.add(works[employee_id, shift_id] == 1)
 
     # --- 3. Objective -------------------------------------------------------------
     # Out of all the schedules that follow the rules, pick the cheapest.

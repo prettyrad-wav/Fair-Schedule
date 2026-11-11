@@ -11,7 +11,7 @@ All changes apply to one week only. The `Shift` templates and `Employee` records
 | Type | Fields | Effect before solving | Example |
 |---|---|---|---|
 | `BlockShift` | `employee_id`, `shift_id` | Employee can't work this shift this week (treated like a Can't rating) | Time off, call-outs |
-| `AssignShift` | `employee_id`, `shift_id` | Employee must work this shift this week | "Put Taylor on Thursday bar" |
+| `AssignShift` | `employee_id`, `shift_id` | Employee must work this shift this week (passed to `solve_week` as `required`) | "Put Taylor on Thursday bar" |
 | `SetCoverage` | `shift_id`, `needed` | Shift needs this many people this week (absolute number, not +1/−1) | Big party, slow night |
 | `SetMaxShifts` | `employee_id`, `max_shifts` | Employee's max shifts for this week only | "Taylor only wants 2 shifts" |
 
@@ -23,7 +23,7 @@ Rules for `parse_command`:
 
 ## Test 3 commands
 
-Every command was checked against the sample week (`sample_data.py`, ledger 0, week of 11-09-2026). The changes in the "Expected changes" column all leave a valid schedule.
+The expected changes for #1–#9 are checked against the sample week (`sample_data.py`, ledger 0, week of 11-09-2026) in `tests/test_manager_commands.py`. Each one leaves a valid schedule, and every change holds in it. These tests skip Claude; whether Claude produces these changes is Test 3 itself.
 
 Baseline schedule they refer to:
 
