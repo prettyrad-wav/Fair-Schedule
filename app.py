@@ -18,6 +18,7 @@ import pandas as pd
 import streamlit as st
 
 from fair_schedule.ai import explain_schedule
+from fair_schedule.changes import BlockShift, ChangeStore, apply_changes, time_off_changes
 from fair_schedule.explanations import EmployeeFacts, build_explanation_facts
 from fair_schedule.fairness import to_scores, update_ledger
 from fair_schedule.models import Employee, LedgerEntry, Rating, Schedule, Shift
@@ -56,6 +57,7 @@ class AppState:
     ledger: dict[str, float]  # everyone's ledger going into the next week
     first_monday: date
     weeks: list[Week] = field(default_factory=list)
+    changes: ChangeStore = field(default_factory=ChangeStore)  # time off, per week
 
 
 def _this_monday() -> date:
@@ -96,20 +98,32 @@ def _shift_label(shift: Shift) -> str:
     return f"{shift.day} {meal}, {shift.role} ({_clock(shift.start)}–{_clock(shift.end)})"
 
 
+def _week_start(number: int) -> date:
+    """The Monday of week 1, 2, 3..."""
+    return app.first_monday + timedelta(weeks=number - 1)
+
+
 def generate_week() -> None:
     """Solve the next week, update the ledger, and add it to the history."""
-    week_start = app.first_monday + timedelta(weeks=len(app.weeks))
+    week_start = _week_start(len(app.weeks) + 1)
     rest_hours = st.session_state.min_rest_hours
+    # This week's time off is applied to copies; the standard week never changes.
+    setup = apply_changes(app.shifts, app.employees, app.changes.for_week(week_start))
     try:
         schedule = solve_week(
-            app.shifts, app.employees, app.ledger, week_start, min_rest_hours=rest_hours
+            setup.shifts,
+            setup.employees,
+            app.ledger,
+            week_start,
+            min_rest_hours=rest_hours,
+            required=setup.required,
         )
     except ValueError as error:
         st.session_state.solve_error = str(error)
         return
 
-    entries = update_ledger(schedule, app.employees, app.ledger)
-    facts = build_explanation_facts(schedule, app.shifts, app.employees, app.ledger, entries)
+    entries = update_ledger(schedule, setup.employees, app.ledger)
+    facts = build_explanation_facts(schedule, setup.shifts, setup.employees, app.ledger, entries)
     app.weeks.append(Week(len(app.weeks) + 1, schedule, entries, facts, rest_hours))
     app.ledger = to_scores(entries)
     st.session_state.solve_error = None
@@ -155,7 +169,7 @@ with st.sidebar:
         st.selectbox(
             "Week to view",
             options=[week.number for week in app.weeks],
-            format_func=lambda n: f"Week {n} ({app.first_monday + timedelta(weeks=n - 1):%b %d})",
+            format_func=lambda n: f"Week {n} ({_week_start(n):%b %d})",
             key="selected_week",
         )
 
@@ -184,18 +198,21 @@ week: Week | None = None
 if app.weeks:
     week = app.weeks[st.session_state.get("selected_week", len(app.weeks)) - 1]
 
-schedule_tab, explain_tab, fairness_tab, staff_tab = st.tabs(
-    ["Schedule", "Explanations", "Fairness over time", "Staff & shifts"]
+schedule_tab, time_off_tab, explain_tab, fairness_tab, staff_tab = st.tabs(
+    ["Schedule", "Time off", "Explanations", "Fairness over time", "Staff & shifts"]
 )
 
 # --- 4a. Schedule ---
 
 with schedule_tab:
+    next_number = len(app.weeks) + 1
     st.button(
-        f"Generate week {len(app.weeks) + 1}",
+        f"Generate week {next_number}",
         type="primary",
         on_click=generate_week,
     )
+    if blocked := app.changes.for_week(_week_start(next_number)):
+        st.caption(f"Week {next_number} has time off approved ({len(blocked)} shifts blocked). See the Time off tab.")
     if st.session_state.get("solve_error"):
         st.error(st.session_state.solve_error)
 
@@ -234,7 +251,52 @@ with schedule_tab:
         ).sort_values("Priority next week")
         st.dataframe(summary, hide_index=True, width="stretch")
 
-# --- 4b. Explanations ---
+# --- 4b. Time off ---
+
+with time_off_tab:
+    st.write(
+        "Enter time off you've already approved. A day off blocks every shift that "
+        "day in the employee's roles, and the solver works around it when you "
+        "generate that week. Weeks already generated can't change here."
+    )
+    upcoming = [len(app.weeks) + n for n in range(1, 5)]  # the next 4 weeks to generate
+
+    with st.form("time_off", clear_on_submit=True):
+        number = st.selectbox(
+            "Week", upcoming, format_func=lambda n: f"Week {n} ({_week_start(n):%b %d})"
+        )
+        employee_id = st.selectbox("Employee", list(names), format_func=names.get)
+        days = st.multiselect("Days off", DAYS)
+        if st.form_submit_button("Add time off", type="primary"):
+            if not days:
+                st.warning("Pick at least one day.")
+            else:
+                employee = next(e for e in app.employees if e.id == employee_id)
+                app.changes.add(_week_start(number), time_off_changes(employee, days, app.shifts))
+                st.rerun()  # so the Schedule tab, drawn above, sees the new time off
+
+    shifts_by_id = {shift.id: shift for shift in app.shifts}
+    has_any = False
+    for number in upcoming:
+        week_start = _week_start(number)
+        changes = app.changes.for_week(week_start)
+        if not changes:
+            continue
+        has_any = True
+        st.subheader(f"Week {number} ({week_start:%b %d})")
+        for i, change in enumerate(changes):
+            left, right = st.columns([5, 1])
+            if isinstance(change, BlockShift):
+                left.write(f"{names[change.employee_id]}: off {_shift_label(shifts_by_id[change.shift_id])}")
+            else:
+                left.write(str(change))
+            if right.button("Remove", key=f"remove-{number}-{i}"):
+                app.changes.remove(week_start, change)
+                st.rerun()
+    if not has_any:
+        st.info("No time off entered for the next 4 weeks.")
+
+# --- 4c. Explanations ---
 
 with explain_tab:
     if week is None:
@@ -272,7 +334,7 @@ with explain_tab:
                     st.caption(shift_list or "No shifts this week")
                     st.write(week.explanations[f.employee_id])
 
-# --- 4c. Fairness over time ---
+# --- 4d. Fairness over time ---
 
 with fairness_tab:
     if week is None:
@@ -301,7 +363,7 @@ with fairness_tab:
     )
     st.image("docs/images/simulation_chart.png")
 
-# --- 4d. Staff & shifts ---
+# --- 4e. Staff & shifts ---
 
 with staff_tab:
     st.subheader("Staff")
